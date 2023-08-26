@@ -1,29 +1,37 @@
-name: Build and Deploy
 
+#.github/workflows/basic.yaml
+name: Build and Deploy
 on:
   push:
-    branches:
-      - master
+    branches: [ master ]
 
 jobs:
-  build:
-    name: Build APK
+  basic_job:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
-      - name: Checkout code
+      - name: Setup actions.
         uses: actions/checkout@v2
 
-      - name: Set up JDK
+      - name: set up JDK 11
         uses: actions/setup-java@v2
         with:
-          java-version: '17'
-
-      - name: Build with Gradle
+          java-version: '11'
+          distribution: 'temurin'
+          cache: gradle
+          
+      - name: Generate AAR and APK files
+        if: always()
         run: ./gradlew assembleDebug
 
-      - name: Upload APK
+      - name: Upload AAR files
+        if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: app-debug
-          path: app/app-debug.apk
+          name: artifacts.zip
+          path: |
+            app/build/outputs/apk/debug/app-debug.apk
+            dog_network/build/outputs/aar
