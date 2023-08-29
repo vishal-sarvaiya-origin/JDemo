@@ -15,8 +15,24 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v2
       with:
-        java-version: '17' # or your desired Java version
+        java-version: '11' # or your desired Java version
         distribution: 'adopt' # Specify the distribution, e.g., 'adopt', 'adopt-hotspot', etc.
+
+    - name: Cache Gradle distribution
+      uses: actions/cache@v2
+      with:
+        path: /opt/gradle
+        key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          gradle-${{ runner.os }}-
+
+    - name: Install Gradle
+      run: |
+        # Install Gradle version
+        wget https://services.gradle.org/distributions/gradle-7.2-bin.zip -P /tmp
+        unzip -d /opt/gradle /tmp/gradle-7.2-bin.zip
+        export GRADLE_HOME=/opt/gradle/gradle-7.2
+        export PATH=$GRADLE_HOME/bin:$PATH
 
     - name: Grant execute permission for Gradle wrapper
       run: chmod +x ./gradlew
@@ -27,4 +43,10 @@ jobs:
     - name: Build Debug APK
       run: ./gradlew assembleDebug
 
-    # Add more steps here for running tests, code quality checks, etc.
+    - name: Upload APK artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: app-apks
+        path: app/build/outputs/apk/
+
+# ... (you can add more steps here, such as tests, code quality checks, etc.)
