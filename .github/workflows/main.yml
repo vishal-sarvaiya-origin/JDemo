@@ -15,7 +15,7 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v2
       with:
-        java-version: '11' # or your desired Java version
+        java-version: '17' # or your desired Java version
         distribution: 'adopt' # Specify the distribution, e.g., 'adopt', 'adopt-hotspot', etc.
 
     - name: Cache Gradle distribution
