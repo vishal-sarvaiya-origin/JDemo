@@ -39,7 +39,13 @@ jobs:
 
     - name: Build Debug APK
       run: ./gradlew assembleDebug
-      
+
+    - name: Upload APK artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: app-apks
+        path: app/build/outputs/apk/
+
     - name: Upload APKs to DigitalOcean Spaces
       run: |
         echo "access_key = $DO_SPACES_KEY" >> ~/.s3cfg
@@ -49,11 +55,5 @@ jobs:
       env:
         DO_SPACES_KEY: ${{ secrets.DO_SPACES_KEY }}
         DO_SPACES_SECRET: ${{ secrets.DO_SPACES_SECRET }}
-
-    - name: Upload APK artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: app-apks
-        path: app/build/outputs/apk/
 
 # ... (you can add more steps here, such as tests, code quality checks, etc.)
