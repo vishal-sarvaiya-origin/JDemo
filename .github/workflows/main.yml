@@ -50,8 +50,7 @@ jobs:
       run: |
         echo "access_key = $DO_SPACES_KEY" >> ~/.s3cfg
         echo "secret_key = $DO_SPACES_SECRET" >> ~/.s3cfg
-        s3cmd put app/build/outputs/apk/app-release.apk s3://your-space-name/app-release.apk
-        s3cmd put app/build/outputs/apk/app-debug.apk s3://your-space-name/app-debug.apk
+        s3cmd put app/build/outputs/apk/app-debug.apk s3://origin.nyc3.digitaloceanspaces.com/APKs/app-debug.apk
       env:
         DO_SPACES_KEY: ${{ secrets.DO_SPACES_KEY }}
         DO_SPACES_SECRET: ${{ secrets.DO_SPACES_SECRET }}
