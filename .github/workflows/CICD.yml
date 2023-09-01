@@ -6,8 +6,10 @@ env:
 
   # The name of the Play Store
   playstore_name: Frogobox ID
-  DO_SPACES_KEY: ${{ secrets.DO_SPACES_KEY }}
-  DO_SPACES_SECRET: ${{ secrets.DO_SPACES_SECRET }}
+  # DO_SPACES_KEY: ${{ secrets.DO_SPACES_KEY }}
+  # DO_SPACES_SECRET: ${{ secrets.DO_SPACES_SECRET }}
+  DO_SPACES_KEY: DO00DJ8FQ88Q7C49PFZU
+  DO_SPACES_SECRET: +KjaQ38z/FSpEvPi/FDQ4pkXO3j4H++Optf2CQReht8
 
 on:
   
@@ -99,8 +101,11 @@ jobs:
           # Configure s3cmd with your DigitalOcean Spaces credentials
           # echo "access_key = $DO_SPACES_KEY" >> ~/.s3cfg
           # echo "secret_key = $DO_SPACES_SECRET" >> ~/.s3cfg
-          aws configure set aws_access_key_id ${{ secrets.DO_SPACES_KEY }}
-          aws configure set aws_secret_access_key ${{ secrets.DO_SPACES_SECRET }}
+          aws configure set aws_access_key_id $DO_SPACES_KEY
+          aws configure set aws_secret_access_key $DO_SPACES_SECRET
+          aws configure set default.s3.signature_version s3v4
+          aws configure set default.s3.endpoint s3.amazonaws.com
+
           aws configure set default.region us-east-1
 
       - name: Upload to DigitalOcean Spaces
