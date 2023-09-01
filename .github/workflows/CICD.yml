@@ -83,28 +83,31 @@ jobs:
       #     name: ${{ env.date_today }} - ${{ env.playstore_name }} - ${{ env.repository_name }} - App bundle(s) AAB release generated
       #     path: app/build/outputs/bundle/release/
 
-      - name: List APK files
-        run: |
-          ls -R app/build/outputs/apk/debug/
+      # - name: List APK files
+      #   run: |
+      #     ls -R app/build/outputs/apk/debug/
 
-      - name: Install s3cmd
-        run: |
-          # Install s3cmd using apt-get
-          # sudo apt-get update -q
-          # sudo apt-get install -y s3cmd
-          pip install awscli
+      # - name: Install s3cmd
+      #   run: |
+      #     # Install s3cmd using apt-get
+      #     # sudo apt-get update -q
+      #     # sudo apt-get install -y s3cmd
+      #     pip install awscli
 
-      - name: Configure s3cmd
-        run: |
-          # Configure s3cmd with your DigitalOcean Spaces credentials
-          # echo "access_key = $DO_SPACES_KEY" >> ~/.s3cfg
-          # echo "secret_key = $DO_SPACES_SECRET" >> ~/.s3cfg
-          aws configure set aws_access_key_id ${{ secrets.DO_SPACES_KEY }}
-          aws configure set aws_secret_access_key ${{ secrets.DO_SPACES_SECRET }}
-          aws configure set default.region us-east-1
+      # - name: Configure s3cmd
+      #   run: |
+      #     # Configure s3cmd with your DigitalOcean Spaces credentials
+      #     # echo "access_key = $DO_SPACES_KEY" >> ~/.s3cfg
+      #     # echo "secret_key = $DO_SPACES_SECRET" >> ~/.s3cfg
+      #     aws configure set aws_access_key_id $DO_SPACES_KEY
+      #     aws configure set aws_secret_access_key $DO_SPACES_SECRET
+      #     aws configure set default.s3.signature_version s3v4
+      #     aws configure set default.s3.endpoint s3.amazonaws.com
 
-      - name: Upload to DigitalOcean Spaces
-        run: |
-          # Upload files to your DigitalOcean Spaces bucket using s3cmd
-          # s3cmd put app/build/outputs/apk/debug/app-debug.apk s3://origin.nyc3.digitaloceanspaces.com/APKs/app-debug.apk
-          aws s3 cp app/build/outputs/apk/debug/app-debug.apk s3://origin.nyc3.digitaloceanspaces.com/APKs/app-debug.apk
+      #     aws configure set default.region us-east-1
+
+      # - name: Upload to DigitalOcean Spaces
+      #   run: |
+      #     # Upload files to your DigitalOcean Spaces bucket using s3cmd
+      #     # s3cmd put app/build/outputs/apk/debug/app-debug.apk s3://origin.nyc3.digitaloceanspaces.com/APKs/app-debug.apk
+      #     aws s3 cp app/build/outputs/apk/debug/app-debug.apk s3://origin.nyc3.digitaloceanspaces.com/APKs/app-debug.apk
