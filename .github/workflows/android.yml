@@ -8,19 +8,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: set up JDK 1.8
+    - name: Set up JDK
       uses: actions/setup-java@v2
       with:
         java-version: '17' # or your desired Java version
         distribution: 'adopt' # Specify the distribution, e.g., 'adopt', 'adopt-hotspot', etc.
+        
     - name: Make Gradle executable
       run: chmod +x ./gradlew
+      
     - name: Build with Gradle
       run: ./gradlew build
+      
     - name: Build Debug APK
       run: ./gradlew assembleDebug
+      
     - name: Releasing using Hub
       uses: ShaunLWM/action-release-debugapk@master
+      
       env:
        GITHUB_TOKEN: ${{ secrets.TOKEN }}
        APP_FOLDER: app
