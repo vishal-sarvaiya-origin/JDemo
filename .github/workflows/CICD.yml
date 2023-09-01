@@ -6,6 +6,8 @@ env:
 
   # The name of the Play Store
   playstore_name: Frogobox ID
+  DO_SPACES_KEY: ${{ secrets.DO_SPACES_KEY }}
+  DO_SPACES_SECRET: ${{ secrets.DO_SPACES_SECRET }}
 
 on:
   
@@ -87,16 +89,22 @@ jobs:
 
       - name: Install s3cmd
         run: |
-          sudo apt-get update
+          # Install s3cmd using apt-get
+          sudo apt-get update -q
           sudo apt-get install -y s3cmd
-      
-      - name: Upload APKs to DigitalOcean Spaces
+
+      - name: Configure s3cmd
         run: |
-          echo "access_key = DO00T7YYZNRAMAAV7J9Z" >> ~/.s3cfg
-          echo "secret_key = YfiCdrtflrsfLukY5lDfMb2YOMroY5NC8hC6qHaBp5Q" >> ~/.s3cfg
+          # Configure s3cmd with your DigitalOcean Spaces credentials
+          s3cmd --configure <<EOF
+          access_key = $DO_SPACES_KEY
+          secret_key = $DO_SPACES_SECRET
+          host_base = https://nyc3.digitaloceanspaces.com
+          host_bucket = https://origin.nyc3.digitaloceanspaces.com
+          use_https = True
+          EOF
+
+      - name: Upload to DigitalOcean Spaces
+        run: |
+          # Upload files to your DigitalOcean Spaces bucket using s3cmd
           s3cmd put app/build/outputs/apk/debug/app-debug.apk s3://origin.nyc3.digitaloceanspaces.com/APKs/app-debug.apk
-        env:
-          DO_SPACES_KEY: DO00T7YYZNRAMAAV7J9Z
-          DO_SPACES_SECRET: YfiCdrtflrsfLukY5lDfMb2YOMroY5NC8hC6qHaBp5Q
-
-
