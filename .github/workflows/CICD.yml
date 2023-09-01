@@ -100,7 +100,7 @@ jobs:
           access_key = $DO_SPACES_KEY
           secret_key = $DO_SPACES_SECRET
           host_base = https://nyc3.digitaloceanspaces.com
-          host_bucket = https://origin.nyc3.digitaloceanspaces.com
+          host_bucket = %(bucket)s.origin.nyc3.digitaloceanspaces.com
           use_https = True
           EOF
 
