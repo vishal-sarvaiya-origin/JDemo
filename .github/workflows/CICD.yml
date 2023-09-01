@@ -96,13 +96,8 @@ jobs:
       - name: Configure s3cmd
         run: |
           # Configure s3cmd with your DigitalOcean Spaces credentials
-          s3cmd --configure <<EOF
-          access_key = $DO_SPACES_KEY
-          secret_key = $DO_SPACES_SECRET
-          host_base = https://nyc3.digitaloceanspaces.com
-          host_bucket = %(bucket)s.origin.nyc3.digitaloceanspaces.com
-          use_https = True
-          EOF
+          echo "access_key = $DO_SPACES_KEY" >> ~/.s3cfg
+          echo "secret_key = $DO_SPACES_SECRET" >> ~/.s3cfg
 
       - name: Upload to DigitalOcean Spaces
         run: |
