@@ -50,7 +50,8 @@ jobs:
 
       # Create APK Debug
       - name: Build apk debug project (APK) - app module
-        run: ./gradlew assembleDebug
+        # run: ./gradlew assembleDebug
+        run: ./gradlew bundleRelease
 
       - name: Encode and Decode Keystore
         run: |
