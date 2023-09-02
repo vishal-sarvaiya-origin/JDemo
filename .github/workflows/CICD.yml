@@ -55,7 +55,7 @@ jobs:
       - name: Encode and Decode Keystore
         run: |
           # Encode the keystore file as base64 and store it as a variable
-          KEYSIGNER_KEYSTORE_BASE64=$(cat /config/config.jks | base64)
+          KEYSIGNER_KEYSTORE_BASE64=$(cat ../../config/config.jks | base64)
 
           # Save the base64 content to a file
           echo "$KEYSIGNER_KEYSTORE_BASE64" | base64 --decode > keystore.jks
