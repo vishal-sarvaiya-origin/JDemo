@@ -50,8 +50,7 @@ jobs:
 
       # Create APK Debug
       - name: Build apk debug project (APK) - app module
-        # run: ./gradlew assembleDebug
-        run: ./gradlew bundleRelease
+        run: ./gradlew assembleDebug
 
       - name: Encode and Decode Keystore
         run: |
@@ -64,7 +63,8 @@ jobs:
       # Create APK Release
       - name: Build apk release project (APK) - app module
         # run: ./gradlew assemble
-        run: ./gradlew signingConfig
+        # run: ./gradlew signingConfig
+        run: ./gradlew bundleRelease
         env:
           KEYSTORE: keystore.jks
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
